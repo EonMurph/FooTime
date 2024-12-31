@@ -1,6 +1,6 @@
 {
-    "name": "FooTime",
-    "short_name": "FooTime",
+    "name": "foo_time",
+    "short_name": "foo_time",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

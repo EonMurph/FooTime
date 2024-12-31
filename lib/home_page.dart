@@ -1,5 +1,5 @@
-import "package:FooTime/widgets/day_details.dart";
-import "package:FooTime/widgets/month_selector.dart";
+import "package:foo_time/widgets/day_details.dart";
+import "package:foo_time/widgets/month_selector.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 

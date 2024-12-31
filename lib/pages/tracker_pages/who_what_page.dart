@@ -1,5 +1,5 @@
-import "package:FooTime/utils/activity.dart";
-import "package:FooTime/utils/person.dart";
+import "package:foo_time/utils/activity.dart";
+import "package:foo_time/utils/person.dart";
 import "package:flutter/material.dart";
 
 class WhoWhatPage extends StatelessWidget {

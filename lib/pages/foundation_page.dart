@@ -1,4 +1,4 @@
-import "package:FooTime/home_page.dart";
+import "package:foo_time/home_page.dart";
 import "package:flutter/material.dart";
 
 class FoundationPage extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:FooTime/pages/tracker_pages/how_long_page.dart';
-import 'package:FooTime/pages/tracker_pages/who_what_page.dart';
-import 'package:FooTime/utils/activity.dart';
-import 'package:FooTime/utils/person.dart';
+import 'package:foo_time/pages/tracker_pages/how_long_page.dart';
+import 'package:foo_time/pages/tracker_pages/who_what_page.dart';
+import 'package:foo_time/utils/activity.dart';
+import 'package:foo_time/utils/person.dart';
 import 'package:flutter/material.dart';
 
 class TrackerPage extends StatefulWidget {
