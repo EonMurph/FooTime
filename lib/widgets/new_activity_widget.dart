@@ -1,4 +1,4 @@
-import 'package:FooTime/pages/tracker_page.dart';
+import 'package:foo_time/pages/tracker_page.dart';
 import 'package:flutter/material.dart';
 
 class NewActivityWidget extends StatelessWidget {
@@ -10,7 +10,7 @@ class NewActivityWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return TrackerPage();
+          return const TrackerPage();
         }));
       },
       child: SizedBox(
@@ -18,7 +18,7 @@ class NewActivityWidget extends StatelessWidget {
         child: Row(
           spacing: 20,
           children: [
-            Icon(Icons.add),
+            const Icon(Icons.add),
             Text(
               'Track new activity:',
               style: Theme.of(context).textTheme.labelMedium,

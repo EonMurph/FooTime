@@ -1,4 +1,4 @@
-import "package:FooTime/utils/activity.dart";
+import "package:foo_time/utils/activity.dart";
 import "package:flutter/material.dart";
 
 class ActivityWidget extends StatelessWidget {
@@ -22,7 +22,7 @@ class ActivityWidget extends StatelessWidget {
               activity.name,
               style: Theme.of(context).textTheme.labelMedium,
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               '12:45 - 13:35',
               style: Theme.of(context).textTheme.labelSmall,

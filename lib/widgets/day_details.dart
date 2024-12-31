@@ -1,6 +1,6 @@
-import "package:FooTime/utils/activity.dart";
-import "package:FooTime/widgets/activity_widget.dart";
-import "package:FooTime/widgets/new_activity_widget.dart";
+import "package:foo_time/utils/activity.dart";
+import "package:foo_time/widgets/activity_widget.dart";
+import "package:foo_time/widgets/new_activity_widget.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
@@ -13,7 +13,7 @@ class DayDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activities = [
+    final activities = const [
       Activity(id: 1, name: 'Coding', icon: Icons.cloud),
       Activity(id: 1, name: 'Coding', icon: Icons.cloud),
       Activity(id: 1, name: 'Coding', icon: Icons.cloud),
@@ -30,13 +30,13 @@ class DayDetails extends StatelessWidget {
             today ? 'Today' : date,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          if (today) ...[
+          if (today) ... const [
             NewActivityWidget(),
             SizedBox(height: 10),
           ],
           ListView.builder(
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               itemCount: activities.length,
               itemBuilder: (context, index) {
                 final activity = activities[index];
@@ -44,7 +44,7 @@ class DayDetails extends StatelessWidget {
                 return Column(
                   children: [
                     ActivityWidget(activity: activity),
-                    SizedBox(height: 10)
+                    const SizedBox(height: 10)
                   ],
                 );
               }),
