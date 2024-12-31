@@ -1,12 +1,20 @@
+import 'dart:math';
+
 import 'package:FooTime/pages/tracker_pages/how_long_page.dart';
 import 'package:FooTime/pages/tracker_pages/who_what_page.dart';
 import 'package:FooTime/utils/activity.dart';
 import 'package:FooTime/utils/person.dart';
 import 'package:flutter/material.dart';
 
-class TrackerPage extends StatelessWidget {
+class TrackerPage extends StatefulWidget {
   const TrackerPage({super.key});
 
+  @override
+  State<TrackerPage> createState() => _TrackerPageState();
+}
+
+class _TrackerPageState extends State<TrackerPage> {
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     final List<Activity> activities = const [
@@ -37,12 +45,48 @@ class TrackerPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: IndexedStack(
-        index: 0,
+        index: currentPage,
         children: [
           WhoWhatPage(items: people),
           WhoWhatPage(items: activities),
           const HowLongPage(),
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                disabledBackgroundColor: Colors.grey,
+              ),
+              onPressed: currentPage == 0
+                  ? null
+                  : () {
+                      setState(() => currentPage = max(--currentPage, 0));
+                    },
+              child: Text(
+                'Back',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ),
+            TextButton(
+              onPressed: currentPage == 2
+                  ? () {
+                      // TODO: Implement submit button
+                      debugPrint('Not implemented');
+                    }
+                  : () {
+                      setState(() => currentPage = min(++currentPage, 2));
+                    },
+              child: Text(
+                currentPage == 2 ? 'Submit' : 'Next',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
