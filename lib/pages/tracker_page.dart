@@ -1,3 +1,7 @@
+import 'package:FooTime/pages/tracker_pages/how_long_page.dart';
+import 'package:FooTime/pages/tracker_pages/who_what_page.dart';
+import 'package:FooTime/utils/activity.dart';
+import 'package:FooTime/utils/person.dart';
 import 'package:flutter/material.dart';
 
 class TrackerPage extends StatelessWidget {
@@ -5,6 +9,22 @@ class TrackerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Activity> activities = const [
+      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
+      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
+      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
+      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
+      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
+      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
+    ];
+    final List<Person> people = const [
+      Person(id: 1, name: 'John', icon: Icons.person),
+      Person(id: 1, name: 'John', icon: Icons.person),
+      Person(id: 1, name: 'John', icon: Icons.person),
+      Person(id: 1, name: 'John', icon: Icons.person),
+      Person(id: 1, name: 'John', icon: Icons.person),
+      Person(id: 1, name: 'John', icon: Icons.person),
+    ];
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -13,13 +33,15 @@ class TrackerPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text('Track Activity'),
+        title: const Text('Track Activity'),
         centerTitle: true,
       ),
-      body: const IndexedStack(
+      body: IndexedStack(
         index: 0,
         children: [
-          
+          WhoWhatPage(items: people),
+          WhoWhatPage(items: activities),
+          const HowLongPage(),
         ],
       ),
     );
