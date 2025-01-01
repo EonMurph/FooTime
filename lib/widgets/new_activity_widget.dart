@@ -10,7 +10,7 @@ class NewActivityWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return const TrackerPage();
+          return const TrackingPage();
         }));
       },
       child: SizedBox(

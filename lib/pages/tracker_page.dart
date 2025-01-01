@@ -6,14 +6,14 @@ import 'package:foo_time/utils/activity.dart';
 import 'package:foo_time/utils/person.dart';
 import 'package:flutter/material.dart';
 
-class TrackerPage extends StatefulWidget {
-  const TrackerPage({super.key});
+class TrackingPage extends StatefulWidget {
+  const TrackingPage({super.key});
 
   @override
-  State<TrackerPage> createState() => _TrackerPageState();
+  State<TrackingPage> createState() => _TrackingPageState();
 }
 
-class _TrackerPageState extends State<TrackerPage> {
+class _TrackingPageState extends State<TrackingPage> {
   int currentPage = 0;
   final PageController _pageController = PageController(
     initialPage: 0,
