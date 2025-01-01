@@ -14,7 +14,17 @@ class TrackerPage extends StatefulWidget {
 }
 
 class _TrackerPageState extends State<TrackerPage> {
-  int currentPage = 0;
+  int currentPage = 2;
+  final PageController _pageController = PageController(
+    initialPage: 2,
+  );
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Activity> activities = const [
@@ -33,6 +43,7 @@ class _TrackerPageState extends State<TrackerPage> {
       Person(id: 1, name: 'John', icon: Icons.person),
       Person(id: 1, name: 'John', icon: Icons.person),
     ];
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -44,8 +55,9 @@ class _TrackerPageState extends State<TrackerPage> {
         title: const Text('Track Activity'),
         centerTitle: true,
       ),
-      body: IndexedStack(
-        index: currentPage,
+      body: PageView(
+        controller: _pageController,
+        scrollDirection: Axis.horizontal,
         children: [
           WhoWhatPage(
             items: people,
@@ -73,6 +85,9 @@ class _TrackerPageState extends State<TrackerPage> {
                   ? null
                   : () {
                       setState(() => currentPage = max(--currentPage, 0));
+                      _pageController.previousPage(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.easeIn);
                     },
               child: Text(
                 'Back',
@@ -87,6 +102,9 @@ class _TrackerPageState extends State<TrackerPage> {
                     }
                   : () {
                       setState(() => currentPage = min(++currentPage, 2));
+                      _pageController.nextPage(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.easeIn);
                     },
               child: Text(
                 currentPage == 2 ? 'Submit' : 'Next',
