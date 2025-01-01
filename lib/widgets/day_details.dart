@@ -30,7 +30,7 @@ class DayDetails extends StatelessWidget {
             today ? 'Today' : date,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          if (today) ... const [
+          if (today) ...const [
             NewActivityWidget(),
             SizedBox(height: 10),
           ],

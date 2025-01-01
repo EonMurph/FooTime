@@ -6,7 +6,11 @@ class WhoWhatPage extends StatelessWidget {
   final List<dynamic> items;
   final String heading;
   final String body;
-  const WhoWhatPage({super.key, required this.items, required this.heading, required this.body})
+  const WhoWhatPage(
+      {super.key,
+      required this.items,
+      required this.heading,
+      required this.body})
       : assert(items is List<Activity> || items is List<Person>);
 
   @override
