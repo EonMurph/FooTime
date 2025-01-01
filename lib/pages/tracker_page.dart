@@ -47,8 +47,16 @@ class _TrackerPageState extends State<TrackerPage> {
       body: IndexedStack(
         index: currentPage,
         children: [
-          WhoWhatPage(items: people),
-          WhoWhatPage(items: activities),
+          WhoWhatPage(
+            items: people,
+            heading: 'People:',
+            body: 'Who are you with?',
+          ),
+          WhoWhatPage(
+            items: activities,
+            heading: 'Activity:',
+            body: 'What activity are you doing?',
+          ),
           const HowLongPage(),
         ],
       ),
