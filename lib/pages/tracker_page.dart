@@ -14,9 +14,9 @@ class TrackerPage extends StatefulWidget {
 }
 
 class _TrackerPageState extends State<TrackerPage> {
-  int currentPage = 2;
+  int currentPage = 0;
   final PageController _pageController = PageController(
-    initialPage: 2,
+    initialPage: 0,
   );
 
   @override
@@ -56,6 +56,9 @@ class _TrackerPageState extends State<TrackerPage> {
         centerTitle: true,
       ),
       body: PageView(
+        onPageChanged: (value) {
+          setState(() => currentPage = value);
+        },
         controller: _pageController,
         scrollDirection: Axis.horizontal,
         children: [
@@ -84,7 +87,6 @@ class _TrackerPageState extends State<TrackerPage> {
               onPressed: currentPage == 0
                   ? null
                   : () {
-                      setState(() => currentPage = max(--currentPage, 0));
                       _pageController.previousPage(
                           duration: const Duration(milliseconds: 100),
                           curve: Curves.easeIn);
@@ -101,7 +103,6 @@ class _TrackerPageState extends State<TrackerPage> {
                       debugPrint('Not implemented');
                     }
                   : () {
-                      setState(() => currentPage = min(++currentPage, 2));
                       _pageController.nextPage(
                           duration: const Duration(milliseconds: 100),
                           curve: Curves.easeIn);
