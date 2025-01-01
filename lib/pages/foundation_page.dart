@@ -15,18 +15,25 @@ class _FoundationPageState extends State<FoundationPage> {
     Placeholder(),
   ] as List<Widget>;
   int currentPage = 1;
+  final PageController pageController = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: currentPage, children: pages),
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (value) {
+          setState(() => currentPage = value);
+        },
+        children: pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize:
             Theme.of(context).textTheme.labelSmall!.fontSize as double,
         unselectedFontSize:
             (Theme.of(context).textTheme.labelSmall!.fontSize as double) - 3,
         onTap: (value) {
-          setState(() => currentPage = value);
+          pageController.jumpToPage(value);
         },
         currentIndex: currentPage,
         items: const [
