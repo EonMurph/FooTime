@@ -17,7 +17,6 @@ class _HowLongPageState extends State<HowLongPage> {
       Activity(id: 1, name: 'Coding', icon: Icons.cloud),
       Activity(id: 1, name: 'Coding', icon: Icons.cloud),
     ];
-    final elapsed = 15;
     final startTime = '12:45';
     final endTime = '13:35';
 
@@ -43,7 +42,7 @@ class _HowLongPageState extends State<HowLongPage> {
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                       Text(
-                        '$elapsed mins',
+                        '${sliderValues[index].round()} mins',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],

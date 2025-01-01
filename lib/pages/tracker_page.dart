@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:foo_time/pages/tracker_pages/how_long_page.dart';
 import 'package:foo_time/pages/tracker_pages/who_what_page.dart';
 import 'package:foo_time/utils/activity.dart';
@@ -29,19 +27,17 @@ class _TrackingPageState extends State<TrackingPage> {
   Widget build(BuildContext context) {
     final List<Activity> activities = const [
       Activity(id: 1, name: 'Coding', icon: Icons.cloud),
-      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
-      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
-      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
-      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
-      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
+      Activity(id: 2, name: 'Reading', icon: Icons.book),
+      Activity(id: 3, name: 'Running', icon: Icons.directions_run),
+      Activity(id: 4, name: 'Cooking', icon: Icons.kitchen),
+      Activity(id: 5, name: 'Gaming', icon: Icons.videogame_asset),
+      Activity(id: 6, name: 'Sleeping', icon: Icons.bed),
     ];
     final List<Person> people = const [
       Person(id: 1, name: 'John', icon: Icons.person),
-      Person(id: 1, name: 'John', icon: Icons.person),
-      Person(id: 1, name: 'John', icon: Icons.person),
-      Person(id: 1, name: 'John', icon: Icons.person),
-      Person(id: 1, name: 'John', icon: Icons.person),
-      Person(id: 1, name: 'John', icon: Icons.person),
+      Person(id: 2, name: 'Jane', icon: Icons.person_outline),
+      Person(id: 3, name: 'Alice', icon: Icons.person_add),
+      Person(id: 4, name: 'Bob', icon: Icons.person_pin),
     ];
 
     return Scaffold(
@@ -61,16 +57,19 @@ class _TrackingPageState extends State<TrackingPage> {
         },
         controller: _pageController,
         scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           WhoWhatPage(
             items: people,
             heading: 'People:',
             body: 'Who are you with?',
+            type: 'person',
           ),
           WhoWhatPage(
             items: activities,
             heading: 'Activity:',
             body: 'What activity are you doing?',
+            type: 'activity',
           ),
           const HowLongPage(),
         ],
