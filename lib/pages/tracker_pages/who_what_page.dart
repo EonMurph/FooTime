@@ -20,6 +20,7 @@ class WhoWhatPage extends StatelessWidget {
     final double iconSize = 50; // TODO; Change to enum
     final TextStyle labelStyle =
         Theme.of(context).textTheme.labelMedium!; // TODO: Change to enum
+
     return Column(
       children: [
         Text(
