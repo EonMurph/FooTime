@@ -8,7 +8,11 @@ class NewActivityWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elapsedTime = '15 minutes';
+    final elapsedTime = ref
+        .watch(trackerProvider)
+        .currentTime
+        .difference(ref.watch(trackerProvider).lastTrackedTime)
+        .inMinutes;
     return TextButton(
       onPressed: DateTime.now()
                   .difference(ref.watch(trackerProvider).lastTrackedTime)
@@ -31,7 +35,7 @@ class NewActivityWidget extends ConsumerWidget {
               style: Theme.of(context).textTheme.labelMedium,
             ),
             Text(
-              elapsedTime,
+              '$elapsedTime mins',
               style: Theme.of(context).textTheme.labelSmall,
             )
           ],
