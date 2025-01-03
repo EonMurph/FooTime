@@ -25,7 +25,6 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
     double allocatedTime = sliderValues.isNotEmpty
         ? sliderValues.values.reduce((sum, element) => sum + element)
         : 0;
-    debugPrint(allocatedTime.toString());
 
     return ListView.builder(
       shrinkWrap: true,

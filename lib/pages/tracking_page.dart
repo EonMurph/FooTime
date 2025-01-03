@@ -109,7 +109,6 @@ class _TrackingPageState extends ConsumerState<TrackingPage> {
                           _pageController.nextPage(
                               duration: const Duration(milliseconds: 100),
                               curve: Curves.easeIn);
-                          debugPrint(selectedActivities.toString());
                         }
                       : null,
               child: Text(
