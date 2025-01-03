@@ -26,6 +26,9 @@ class MyApp extends ConsumerWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 disabledBackgroundColor: Colors.grey,
               ),
             ),
