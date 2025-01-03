@@ -1,4 +1,4 @@
-import 'package:foo_time/pages/tracker_page.dart';
+import 'package:foo_time/pages/tracking_page.dart';
 import 'package:flutter/material.dart';
 
 class NewActivityWidget extends StatelessWidget {
