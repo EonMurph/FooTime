@@ -18,6 +18,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                disabledBackgroundColor: Colors.grey,
+              ),
+            ),
             fontFamily: 'Roboto',
             textTheme: const TextTheme(
               titleMedium: TextStyle(
