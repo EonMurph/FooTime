@@ -22,11 +22,10 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
     final DateTime lastTime = ref.watch(trackerProvider).lastTrackedTime;
     final double elapsed =
         currentTime.difference(lastTime).inMinutes.toDouble();
-    double selectedTime = sliderValues.isNotEmpty
+    double allocatedTime = sliderValues.isNotEmpty
         ? sliderValues.values.reduce((sum, element) => sum + element)
         : 0;
-    debugPrint(elapsed.toString());
-    debugPrint(selectedTime.toString());
+    debugPrint(allocatedTime.toString());
 
     return ListView.builder(
       shrinkWrap: true,
@@ -65,20 +64,20 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
                     divisions: (elapsed).toInt(),
                     label: sliderValues[id]?.toString() ?? '0',
                     onChanged: (double value) {
-                      if (elapsed - selectedTime > 0) {
+                      if (elapsed - allocatedTime > 0) {
                         setState(() {
                           ref.read(trackerProvider).sliderValues[id] =
                               value.roundToDouble();
-                          selectedTime = sliderValues.values
+                          allocatedTime = sliderValues.values
                               .reduce((sum, element) => sum + element);
                         });
-                      } else if (elapsed - selectedTime == 0) {
+                      } else if (elapsed - allocatedTime == 0) {
                         if (sliderValues.containsKey(id) &&
                             value < sliderValues[id]!) {
                           setState(() {
                             ref.read(trackerProvider).sliderValues[id] =
                                 value.roundToDouble();
-                            selectedTime = sliderValues.values
+                            allocatedTime = sliderValues.values
                                 .reduce((sum, element) => sum + element);
                           });
                         } else if (!sliderValues.containsKey(id)) {
