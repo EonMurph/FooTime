@@ -1,17 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foo_time/pages/tracker_pages/how_long_page.dart';
 import 'package:foo_time/pages/tracker_pages/who_what_page.dart';
+import 'package:foo_time/providers/riverpod_providers.dart';
 import 'package:foo_time/utils/activity.dart';
 import 'package:foo_time/utils/person.dart';
 import 'package:flutter/material.dart';
 
-class TrackingPage extends StatefulWidget {
+class TrackingPage extends ConsumerStatefulWidget {
   const TrackingPage({super.key});
 
   @override
-  State<TrackingPage> createState() => _TrackingPageState();
+  ConsumerState<TrackingPage> createState() => _TrackingPageState();
 }
 
-class _TrackingPageState extends State<TrackingPage> {
+class _TrackingPageState extends ConsumerState<TrackingPage> {
   int currentPage = 0;
   final PageController _pageController = PageController(
     initialPage: 0,
@@ -39,6 +41,8 @@ class _TrackingPageState extends State<TrackingPage> {
       Person(id: 3, name: 'Alice', icon: Icons.person_add),
       Person(id: 4, name: 'Bob', icon: Icons.person_pin),
     ];
+    final selectedActivities = ref.watch(trackerProvider).selectedActivities;
+    final selectedPeople = ref.watch(trackerProvider).selectedPeople;
 
     return Scaffold(
       appBar: AppBar(
@@ -63,13 +67,13 @@ class _TrackingPageState extends State<TrackingPage> {
             items: people,
             heading: 'People:',
             body: 'Who are you with?',
-            type: 'person',
+            type: 'people',
           ),
           WhoWhatPage(
             items: activities,
             heading: 'Activity:',
             body: 'What activity are you doing?',
-            type: 'activity',
+            type: 'activities',
           ),
           const HowLongPage(),
         ],
@@ -80,9 +84,6 @@ class _TrackingPageState extends State<TrackingPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-              style: TextButton.styleFrom(
-                disabledBackgroundColor: Colors.grey,
-              ),
               onPressed: currentPage == 0
                   ? null
                   : () {
@@ -101,11 +102,15 @@ class _TrackingPageState extends State<TrackingPage> {
                       // TODO: Implement submit button
                       debugPrint('Not implemented');
                     }
-                  : () {
-                      _pageController.nextPage(
-                          duration: const Duration(milliseconds: 100),
-                          curve: Curves.easeIn);
-                    },
+                  : (currentPage == 0 && selectedPeople.isNotEmpty) ||
+                          (currentPage == 1 && selectedActivities.isNotEmpty)
+                      ? () {
+                          _pageController.nextPage(
+                              duration: const Duration(milliseconds: 100),
+                              curve: Curves.easeIn);
+                          debugPrint(selectedActivities.toString());
+                        }
+                      : null,
               child: Text(
                 currentPage == 2 ? 'Submit' : 'Next',
                 style: Theme.of(context).textTheme.labelMedium,

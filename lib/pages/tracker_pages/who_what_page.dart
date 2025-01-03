@@ -1,13 +1,15 @@
-import "package:flutter/foundation.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:foo_time/providers/riverpod_providers.dart";
 import "package:foo_time/utils/activity.dart";
 import "package:foo_time/utils/person.dart";
 import "package:flutter/material.dart";
 
-class WhoWhatPage extends StatefulWidget {
+class WhoWhatPage extends ConsumerWidget {
   final List<dynamic> items;
   final String heading;
   final String body;
   final String type;
+
   const WhoWhatPage({
     super.key,
     required this.items,
@@ -17,14 +19,11 @@ class WhoWhatPage extends StatefulWidget {
   }) : assert(items is List<Activity> || items is List<Person>);
 
   @override
-  State<WhoWhatPage> createState() => _WhoWhatPageState();
-}
-
-class _WhoWhatPageState extends State<WhoWhatPage> {
-  Map<int, dynamic> selectedButtons = {};
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedButtons = type == "people"
+        ? ref.watch(trackerProvider).selectedPeople
+        : ref.watch(trackerProvider).selectedActivities;
+    ref.watch(trackerProvider);
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double iconWidth = 150; // TODO: Change to enum
     final double iconSize = 50; // TODO; Change to enum
@@ -34,11 +33,11 @@ class _WhoWhatPageState extends State<WhoWhatPage> {
     return Column(
       children: [
         Text(
-          widget.heading,
+          heading,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         Text(
-          widget.body,
+          body,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         GridView.builder(
@@ -47,7 +46,7 @@ class _WhoWhatPageState extends State<WhoWhatPage> {
             crossAxisCount: screenWidth ~/ iconWidth,
             childAspectRatio: 1,
           ),
-          itemCount: widget.items.length,
+          itemCount: items.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -61,35 +60,32 @@ class _WhoWhatPageState extends State<WhoWhatPage> {
                       ),
                     ),
                     backgroundColor: WidgetStatePropertyAll(
-                      selectedButtons.containsKey(widget.items[index].id)
+                      selectedButtons.containsKey(items[index].id)
                           ? Theme.of(context).colorScheme.primary
                           : Theme.of(context).colorScheme.surface,
                     ),
                     iconColor: WidgetStatePropertyAll(
-                      selectedButtons.containsKey(widget.items[index].id)
+                      selectedButtons.containsKey(items[index].id)
                           ? Theme.of(context).colorScheme.onPrimary
                           : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   onPressed: () {
-                    int id = widget.items[index].id;
-                    setState(() {
-                      if (selectedButtons.containsKey(id)) {
-                        selectedButtons.remove(id);
-                      } else {
-                        selectedButtons[id] = widget.items[index];
-                      }
-                    });
-                    if (kDebugMode) debugPrint(selectedButtons.toString());
+                    int id = items[index].id;
+                    if (selectedButtons.containsKey(id)) {
+                      ref.read(trackerProvider).remove(id, selectedButtons);
+                    } else {
+                      ref.read(trackerProvider).add(items[index], selectedButtons);
+                    }
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(widget.items[index].icon, size: iconSize),
+                      Icon(items[index].icon, size: iconSize),
                       Text(
-                        widget.items[index].name,
+                        items[index].name,
                         style: labelStyle.copyWith(
-                          color: selectedButtons.containsKey(widget.items[index].id)
+                          color: selectedButtons.containsKey(items[index].id)
                               ? Theme.of(context).colorScheme.onPrimary
                               : Theme.of(context).colorScheme.onSurface,
                         ),

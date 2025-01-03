@@ -1,35 +1,45 @@
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:foo_time/providers/riverpod_providers.dart";
 import "package:foo_time/utils/activity.dart";
+import "package:intl/intl.dart";
 
-class HowLongPage extends StatefulWidget {
+class HowLongPage extends ConsumerStatefulWidget {
   const HowLongPage({super.key});
 
   @override
-  State<HowLongPage> createState() => _HowLongPageState();
+  ConsumerState<HowLongPage> createState() => _HowLongPageState();
 }
 
-class _HowLongPageState extends State<HowLongPage> {
-  final List<double> sliderValues = [0, 0, 0, 0, 0, 0];
-
+class _HowLongPageState extends ConsumerState<HowLongPage> {
+  final DateTime currentTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    final activities = const [
-      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
-      Activity(id: 1, name: 'Coding', icon: Icons.cloud),
-    ];
-    final startTime = '12:45';
-    final endTime = '13:35';
+    final Map<int, Activity> selectedActivities =
+        ref.watch(trackerProvider).selectedActivities;
+    final Map<int, double> sliderValues =
+        ref.watch(trackerProvider).sliderValues;
+    final DateTime lastTime = ref.watch(trackerProvider).lastTrackedTime;
+    final double elapsed =
+        currentTime.difference(lastTime).inMinutes.toDouble();
+    double selectedTime = sliderValues.isNotEmpty
+        ? sliderValues.values.reduce((sum, element) => sum + element)
+        : 0;
+    debugPrint(elapsed.toString());
+    debugPrint(selectedTime.toString());
 
     return ListView.builder(
       shrinkWrap: true,
       padding: const EdgeInsets.all(30),
-      itemCount: activities.length,
+      itemCount: selectedActivities.length,
       itemBuilder: (context, index) {
+        final selectedActivitiesIDs = selectedActivities.keys.toList();
+        final id = selectedActivitiesIDs[index];
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              activities[index].icon,
+              selectedActivities[id]!.icon,
               size: 50,
             ),
             Expanded(
@@ -38,29 +48,49 @@ class _HowLongPageState extends State<HowLongPage> {
                   Row(
                     children: [
                       Text(
-                        activities[index].name,
+                        selectedActivities[id]!.name,
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                       Text(
-                        '${sliderValues[index].round()} mins',
+                        '${sliderValues[id]?.round() ?? 0} mins',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
+                      Text(elapsed.toString())
                     ],
                   ),
                   Slider(
-                    value: sliderValues[index],
+                    value: sliderValues[id] ?? 0,
                     min: 0,
-                    max: 100,
-                    label: sliderValues[index].round().toString(),
+                    max: elapsed,
+                    divisions: (elapsed).toInt(),
+                    label: sliderValues[id]?.toString() ?? '0',
                     onChanged: (double value) {
-                      setState(() {
-                        sliderValues[index] = value;
-                      });
+                      if (elapsed - selectedTime > 0) {
+                        setState(() {
+                          ref.read(trackerProvider).sliderValues[id] =
+                              value.roundToDouble();
+                          selectedTime = sliderValues.values
+                              .reduce((sum, element) => sum + element);
+                        });
+                      } else if (elapsed - selectedTime == 0) {
+                        if (sliderValues.containsKey(id) &&
+                            value < sliderValues[id]!) {
+                          setState(() {
+                            ref.read(trackerProvider).sliderValues[id] =
+                                value.roundToDouble();
+                            selectedTime = sliderValues.values
+                                .reduce((sum, element) => sum + element);
+                          });
+                        } else if (!sliderValues.containsKey(id)) {
+                          ref.read(trackerProvider).sliderValues[id] = 0;
+                        }
+                      }
                     },
                   ),
                   Row(children: [
-                    Text(startTime),
-                    Text(endTime),
+                    Text(DateFormat.Hm().format(lastTime)),
+                    const Spacer(),
+                    Text(DateFormat.Hm().format(currentTime)),
                   ])
                 ],
               ),
