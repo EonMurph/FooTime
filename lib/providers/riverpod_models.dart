@@ -13,6 +13,13 @@ class WhoWhatModel extends ChangeNotifier {
     this.sliderValues = const {},
   });
 
+  DateTime currentTime = DateTime.now();
+
+  void updateTime() {
+    currentTime = DateTime.now();
+    notifyListeners();
+  }
+
   void add(dynamic button, Map<int, dynamic> buttons) {
     buttons[button.id] = button;
     notifyListeners();

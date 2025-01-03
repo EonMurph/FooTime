@@ -12,7 +12,6 @@ class HowLongPage extends ConsumerStatefulWidget {
 }
 
 class _HowLongPageState extends ConsumerState<HowLongPage> {
-  final DateTime currentTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final Map<int, Activity> selectedActivities =
@@ -20,6 +19,7 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
     final Map<int, double> sliderValues =
         ref.watch(trackerProvider).sliderValues;
     final DateTime lastTime = ref.watch(trackerProvider).lastTrackedTime;
+    final DateTime currentTime = ref.watch(trackerProvider).currentTime;
     final double elapsed =
         currentTime.difference(lastTime).inMinutes.toDouble();
     double allocatedTime = sliderValues.isNotEmpty

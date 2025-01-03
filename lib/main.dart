@@ -1,17 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foo_time/pages/foundation_page.dart';
 import 'package:flutter/material.dart';
+import 'package:foo_time/providers/riverpod_providers.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // ignore: unused_local_variable
+    final timer = Timer.periodic(const Duration(seconds: 10),
+        (timer) => ref.read(trackerProvider).updateTime());
     return MaterialApp(
         title: 'FooTime',
         debugShowCheckedModeBanner: false,
