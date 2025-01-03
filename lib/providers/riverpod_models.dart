@@ -6,12 +6,11 @@ class WhoWhatModel extends ChangeNotifier {
   final Map<int, Person> selectedPeople;
   final Map<int, Activity> selectedActivities;
   final Map<int, double> sliderValues;
-  DateTime lastTrackedTime;
+  DateTime lastTrackedTime = DateTime.now();
   WhoWhatModel({
-    required this.selectedPeople,
-    required this.selectedActivities,
-    required this.sliderValues,
-    required this.lastTrackedTime,
+    this.selectedPeople = const {},
+    this.selectedActivities = const {},
+    this.sliderValues = const {},
   });
 
   void add(dynamic button, Map<int, dynamic> buttons) {

@@ -6,6 +6,5 @@ final trackerProvider = ChangeNotifierProvider<WhoWhatModel>(
     selectedPeople: {},
     selectedActivities: {},
     sliderValues: {},
-    lastTrackedTime: DateTime.now().subtract(const Duration(minutes: 15)),
   ),
 );
