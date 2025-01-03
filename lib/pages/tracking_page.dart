@@ -99,8 +99,9 @@ class _TrackingPageState extends ConsumerState<TrackingPage> {
             TextButton(
               onPressed: currentPage == 2
                   ? () {
-                      // TODO: Implement submit button
-                      debugPrint('Not implemented');
+                      // TODO: disable submit until all time allocated
+                      ref.read(trackerProvider).submit();
+                      Navigator.of(context).pop();
                     }
                   : (currentPage == 0 && selectedPeople.isNotEmpty) ||
                           (currentPage == 1 && selectedActivities.isNotEmpty)

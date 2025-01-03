@@ -24,4 +24,15 @@ class WhoWhatModel extends ChangeNotifier {
     if (sliderValues.keys.contains(id)) sliderValues.remove(id);
     notifyListeners();
   }
+
+  void submit() {
+    debugPrint('Submitting data');
+    // TODO: save data to file
+    selectedPeople.clear();
+    selectedActivities.clear();
+    sliderValues.clear();
+    lastTrackedTime = DateTime.now();
+    notifyListeners();
+    debugPrint('Data submitted');
+  }
 }
