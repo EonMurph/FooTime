@@ -7,8 +7,8 @@ class ActivityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return TextButton(
+      onPressed: () {
         // TODO: Implement activity details tap
         debugPrint('Not yet implemented');
       },
