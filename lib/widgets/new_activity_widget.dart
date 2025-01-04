@@ -8,16 +8,9 @@ class NewActivityWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elapsedTime = ref
-        .watch(trackerProvider)
-        .currentTime
-        .difference(ref.watch(trackerProvider).lastTrackedTime)
-        .inMinutes;
+    final elapsedTime = ref.watch(trackerProvider).elapsedTime.toInt();
     return TextButton(
-      onPressed: DateTime.now()
-                  .difference(ref.watch(trackerProvider).lastTrackedTime)
-                  .inMinutes ==
-              0
+      onPressed: elapsedTime == 0
           ? null
           : () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
