@@ -39,6 +39,11 @@ class TrackerModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeSliderValue(int id, double value) {
+    sliderValues[id] = value;
+    notifyListeners();
+  }
+
   void submit() {
     debugPrint('Submitting data');
     // TODO: save data to file

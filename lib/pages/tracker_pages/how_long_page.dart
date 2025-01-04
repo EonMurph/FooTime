@@ -62,24 +62,24 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
                     divisions: (elapsedTime).toInt(),
                     label: sliderValues[id]?.toString() ?? '0',
                     onChanged: (double value) {
-                      if (elapsed - allocatedTime > 0) {
+                      if (elapsedTime - allocatedTime > 0) {
+                        ref.read(trackerProvider).changeSliderValue(id, value);
                         setState(() {
-                          ref.read(trackerProvider).sliderValues[id] =
-                              value.roundToDouble();
                           allocatedTime = sliderValues.values
                               .reduce((sum, element) => sum + element);
                         });
                       } else if (elapsedTime - allocatedTime == 0) {
                         if (sliderValues.containsKey(id) &&
                             value < sliderValues[id]!) {
+                          ref
+                              .read(trackerProvider)
+                              .changeSliderValue(id, value);
                           setState(() {
-                            ref.read(trackerProvider).sliderValues[id] =
-                                value.roundToDouble();
                             allocatedTime = sliderValues.values
                                 .reduce((sum, element) => sum + element);
                           });
                         } else if (!sliderValues.containsKey(id)) {
-                          ref.read(trackerProvider).sliderValues[id] = 0;
+                          ref.read(trackerProvider).changeSliderValue(id, 0);
                         }
                       }
                     },

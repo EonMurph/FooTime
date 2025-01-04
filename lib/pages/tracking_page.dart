@@ -43,6 +43,11 @@ class _TrackingPageState extends ConsumerState<TrackingPage> {
     ];
     final selectedActivities = ref.watch(trackerProvider).selectedActivities;
     final selectedPeople = ref.watch(trackerProvider).selectedPeople;
+    final sliderValues = ref.watch(trackerProvider).sliderValues;
+    final elapsedTime = ref.watch(trackerProvider).elapsedTime;
+    double allocatedTime = sliderValues.isNotEmpty
+        ? sliderValues.values.reduce((sum, element) => sum + element)
+        : 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -98,11 +103,12 @@ class _TrackingPageState extends ConsumerState<TrackingPage> {
             ),
             TextButton(
               onPressed: currentPage == 2
-                  ? () {
-                      // TODO: disable submit until all time allocated
-                      ref.read(trackerProvider).submit();
-                      Navigator.of(context).pop();
-                    }
+                  ? elapsedTime != allocatedTime
+                      ? null
+                      : () {
+                          ref.read(trackerProvider).submit();
+                          Navigator.of(context).pop();
+                        }
                   : (currentPage == 0 && selectedPeople.isNotEmpty) ||
                           (currentPage == 1 && selectedActivities.isNotEmpty)
                       ? () {
