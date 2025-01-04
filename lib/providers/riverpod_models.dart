@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:foo_time/utils/activity.dart';
 import 'package:foo_time/utils/person.dart';
 
+DateTime roundDateTime() {
+  final DateTime now = DateTime.now();
+  return DateTime(now.year, now.month, now.day, now.hour, now.minute);
+}
+
 class WhoWhatModel extends ChangeNotifier {
   final Map<int, Person> selectedPeople;
   final Map<int, Activity> selectedActivities;
   final Map<int, double> sliderValues;
-  DateTime lastTrackedTime = DateTime.now();
   WhoWhatModel({
     this.selectedPeople = const {},
     this.selectedActivities = const {},
     this.sliderValues = const {},
   });
 
-  DateTime currentTime = DateTime.now();
+  DateTime currentTime = roundDateTime();
+  DateTime lastTrackedTime = roundDateTime();
 
   void updateTime() {
-    currentTime = DateTime.now();
+    currentTime = roundDateTime();
     notifyListeners();
   }
 
@@ -37,7 +42,7 @@ class WhoWhatModel extends ChangeNotifier {
     selectedPeople.clear();
     selectedActivities.clear();
     sliderValues.clear();
-    lastTrackedTime = DateTime.now();
+    lastTrackedTime = roundDateTime();
     notifyListeners();
     debugPrint('Data submitted');
   }
