@@ -16,8 +16,8 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // ignore: unused_local_variable
-    final timer = Timer.periodic(const Duration(seconds: 10),
-        (timer) => ref.read(trackerProvider).updateTime());
+    Timer.periodic(const Duration(seconds: 30),
+        (timer) async => await ref.read(trackerProvider).updateTime());
     return MaterialApp(
         title: 'FooTime',
         debugShowCheckedModeBanner: false,
