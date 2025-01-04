@@ -19,9 +19,12 @@ class WhoWhatModel extends ChangeNotifier {
 
   DateTime currentTime = roundDateTime();
   DateTime lastTrackedTime = roundDateTime();
+  double elapsedTime = 1;
 
-  void updateTime() {
+  Future<void> updateTime() async {
     currentTime = roundDateTime();
+    // elapsedTime = currentTime.difference(lastTrackedTime).inMinutes.toDouble();
+    elapsedTime = 1;
     notifyListeners();
   }
 
@@ -43,6 +46,7 @@ class WhoWhatModel extends ChangeNotifier {
     selectedActivities.clear();
     sliderValues.clear();
     lastTrackedTime = roundDateTime();
+    elapsedTime = 1;
     notifyListeners();
     debugPrint('Data submitted');
   }

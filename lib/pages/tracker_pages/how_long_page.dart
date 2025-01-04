@@ -20,8 +20,7 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
         ref.watch(trackerProvider).sliderValues;
     final DateTime lastTime = ref.watch(trackerProvider).lastTrackedTime;
     final DateTime currentTime = ref.watch(trackerProvider).currentTime;
-    final double elapsed =
-        currentTime.difference(lastTime).inMinutes.toDouble();
+    final double elapsedTime = ref.watch(trackerProvider).elapsedTime;
     double allocatedTime = sliderValues.isNotEmpty
         ? sliderValues.values.reduce((sum, element) => sum + element)
         : 0;
@@ -53,14 +52,14 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
                         '${sliderValues[id]?.round() ?? 0} mins',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
-                      Text(elapsed.toString())
+                      Text(elapsedTime.toString())
                     ],
                   ),
                   Slider(
                     value: sliderValues[id] ?? 0,
                     min: 0,
-                    max: elapsed,
-                    divisions: (elapsed).toInt(),
+                    max: elapsedTime,
+                    divisions: (elapsedTime).toInt(),
                     label: sliderValues[id]?.toString() ?? '0',
                     onChanged: (double value) {
                       if (elapsed - allocatedTime > 0) {
@@ -70,7 +69,7 @@ class _HowLongPageState extends ConsumerState<HowLongPage> {
                           allocatedTime = sliderValues.values
                               .reduce((sum, element) => sum + element);
                         });
-                      } else if (elapsed - allocatedTime == 0) {
+                      } else if (elapsedTime - allocatedTime == 0) {
                         if (sliderValues.containsKey(id) &&
                             value < sliderValues[id]!) {
                           setState(() {
