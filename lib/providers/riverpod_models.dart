@@ -7,11 +7,11 @@ DateTime roundDateTime() {
   return DateTime(now.year, now.month, now.day, now.hour, now.minute);
 }
 
-class WhoWhatModel extends ChangeNotifier {
+class TrackerModel extends ChangeNotifier {
   final Map<int, Person> selectedPeople;
   final Map<int, Activity> selectedActivities;
   final Map<int, double> sliderValues;
-  WhoWhatModel({
+  TrackerModel({
     this.selectedPeople = const {},
     this.selectedActivities = const {},
     this.sliderValues = const {},
