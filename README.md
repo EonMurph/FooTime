@@ -1,3 +1,3 @@
-# FooTime
+# FooTime (WIP)
 
-An app for tracking your time using user defined activities.
+An app built with flutter, for tracking your time using user defined activities.
